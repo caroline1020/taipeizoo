@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.caroline.taipeizoo.area.AreaDetailFragment
 import com.caroline.taipeizoo.main.MainFragment.MainFragment
+import com.caroline.taipeizoo.plant.PlantDetailFragment
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,15 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 val transaction = supportFragmentManager.beginTransaction()
                 transaction.add(R.id.fragment_container, AreaDetailFragment())
+                transaction.addToBackStack("Area")
+                transaction.commit()
+            }
+
+        })
+        viewModel.selectedPlant.observe(this, Observer {
+            if (it != null) {
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.add(R.id.fragment_container, PlantDetailFragment())
                 transaction.addToBackStack("Area")
                 transaction.commit()
             }

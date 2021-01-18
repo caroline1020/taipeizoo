@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">TaipeiZoo</string>
+    <string name="app_name">台北市立動物園</string>
     <string name="error_please_try_again">Error</string>
-    <string name="retry">Retry</string>
+    <string name="retry">重試</string>
+    <string name="also_known_as">別名</string>
+    <string name="how_to_recognize">辨認方式</string>
+    <string name="functionality">功能性</string>
+    <string name="last_update">最後更新 : %1$s</string>
+    <string name="brief">簡介</string>
 </resources>
