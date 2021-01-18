@@ -1,10 +1,12 @@
 package com.caroline.taipeizoo.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.caroline.taipeizoo.model.Info
+import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.Plant
 import com.caroline.taipeizoo.network.ZooApi
 import kotlinx.coroutines.launch
 
@@ -14,28 +16,54 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
 
-    private val _loading = MutableLiveData<Boolean>()
-    private val _data = MutableLiveData<List<Info>>()
+    private val TAG = "MainViewModel"
+    private val _loading = MutableLiveData<LoadingState>()
+    private val _data = MutableLiveData<List<Area>>()
+    private val _selectedArea = MutableLiveData<Area>()
+    private val _selectedPlant = MutableLiveData<Plant>()
+    private val _allPlant = MutableLiveData<List<Plant>>()
 
-    val loading: LiveData<Boolean>
+    val loading: LiveData<LoadingState>
         get() = _loading
 
-    val data: LiveData<List<Info>>
+    val data: LiveData<List<Area>>
         get() = _data
-
+    val selectedArea: LiveData<Area>
+        get() = _selectedArea
+    val selectedPlant: LiveData<Plant>
+        get() = _selectedPlant
 
     fun loadIntroduction() {
         viewModelScope.launch {
-            _loading.value = true
+            _loading.value = LoadingState.LOADING
             try {
-                _data.value = ZooApi.retrofitService.getIntroduction().result.results
-                _loading.value = false
+                _data.value = ZooApi.retrofitService.getAreas().result.results
+                _loading.value = LoadingState.PENDING
             } catch (e: Exception) {
                 _data.value = ArrayList()
-                _loading.value = false
+                _loading.value = LoadingState.ERROR
+                Log.e(TAG, e.localizedMessage)
 
             }
         }
+
+    }
+
+    fun selectArea(area: Area?) {
+
+        _selectedArea.value = area
+    }
+
+    fun selectedPlant(plant: Plant) {
+
+        _selectedPlant.value = plant
+    }
+
+
+    enum class LoadingState {
+        LOADING,
+        PENDING,
+        ERROR
 
     }
 

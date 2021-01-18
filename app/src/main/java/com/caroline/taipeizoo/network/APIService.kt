@@ -1,13 +1,14 @@
 package com.caroline.taipeizoo.network
 
-import com.caroline.taipeizoo.model.InfoResult
-import com.caroline.taipeizoo.model.TopResult
+import com.caroline.taipeizoo.model.AreaResponse
+import com.caroline.taipeizoo.model.PlantResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 /**
@@ -26,7 +27,10 @@ private val retrofit = Retrofit.Builder()
 interface APIService {
 
     @GET("5a0e5fbb-72f8-41c6-908e-2fb25eff9b8a?scope=resourceAquire")
-    suspend fun getIntroduction(): TopResult
+    suspend fun getAreas(): AreaResponse
+
+    @GET("f18de02f-b6c9-47c0-8cda-50efad621c14?scope=resourceAquire")
+    suspend fun getPlants(): PlantResponse
 
 
 }

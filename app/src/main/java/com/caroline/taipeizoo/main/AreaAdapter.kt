@@ -21,49 +21,61 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Info
+import com.caroline.taipeizoo.model.Area
 import kotlinx.android.synthetic.main.view_info_view_holder.view.*
 
-class MainAdapter(private val onClickListener: OnClickListener) :
-    RecyclerView.Adapter<MainAdapter.InfoViewHolder>() {
+class AreaAdapter(private val onClickListener: OnClickListener) :
+    RecyclerView.Adapter<AreaAdapter.InfoViewHolder>() {
 
-    private val data = ArrayList<Info>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.InfoViewHolder {
+    private val data = ArrayList<Area>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.view_info_view_holder, parent, false)
         return InfoViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: MainAdapter.InfoViewHolder, position: Int) {
-        val info: Info = data[position]
-        holder.bind(info)
-        holder.itemView.setOnClickListener { onClickListener.onClick(info) }
+    override fun onBindViewHolder(holder: AreaAdapter.InfoViewHolder, position: Int) {
+        val area: Area = data[position]
+        holder.bind(area)
+        holder.itemView.setOnClickListener { onClickListener.onClick(area) }
     }
 
-    fun update(newData: List<Info>) {
+    fun update(newData: List<Area>) {
         data.clear()
         data.addAll(newData)
         notifyDataSetChanged()
     }
 
+    val options = RequestOptions()
+        .skipMemoryCache(true)
+        .placeholder(R.drawable.ic_launcher_foreground)
 
     inner class InfoViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         val titleText = itemView.titleText
         val descText = itemView.descText
+        val icon = itemView.icon
 
-        fun bind(item: Info) {
+        fun bind(item: Area) {
             titleText.text = item.E_Name
-            descText.text=item.E_Info
+            descText.text = item.E_Info
+
+            Glide.with(itemView.context)
+                .load(item.E_Pic_URL)
+                .centerCrop()
+                .apply(options.override(200, 200))
+                .into(icon);
         }
 
 
     }
 
-    class OnClickListener(val clickListener: (info: Info) -> Unit) {
-        fun onClick(info: Info) = clickListener(info)
+    class OnClickListener(val clickListener: (area: Area) -> Unit) {
+        fun onClick(area: Area) = clickListener(area)
     }
 
     override fun getItemCount(): Int {

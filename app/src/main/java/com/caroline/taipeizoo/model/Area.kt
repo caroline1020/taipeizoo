@@ -1,6 +1,6 @@
 package com.caroline.taipeizoo.model
 
-data class Info(
+data class Area(
     val E_Category: String,
     val E_Geo: String,
     val E_Info: String,
