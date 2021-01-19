@@ -32,9 +32,10 @@ class MainViewModel : ViewModel() {
         get() = _selectedPlant
 
     fun loadIntroduction() {
-        if(_data.value!=null&& _data.value!!.isNotEmpty()){
+        if (_loading.value == LoadingState.LOADING) {
             return
         }
+        _data.value = ArrayList()
         viewModelScope.launch {
             _loading.value = LoadingState.LOADING
             try {

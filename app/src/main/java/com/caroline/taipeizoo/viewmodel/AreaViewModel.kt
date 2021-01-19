@@ -25,9 +25,10 @@ class AreaViewModel : ViewModel() {
         get() = _filteredPlant
 
     fun loadFilteredPlants(areaName: String) {
-        if (_filteredPlant.value != null && _filteredPlant.value!!.isNotEmpty()) {
+        if (_loading.value == LoadingState.LOADING) {
             return
         }
+        _filteredPlant.value = ArrayList()
         viewModelScope.launch {
 
             _loading.value = LoadingState.LOADING

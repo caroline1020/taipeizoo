@@ -17,7 +17,6 @@ import com.caroline.taipeizoo.viewmodel.AreaViewModel
 import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_area.*
-import kotlinx.android.synthetic.main.view_error_panel.*
 
 class AreaDetailFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -44,18 +43,19 @@ class AreaDetailFragment : Fragment() {
             v.findNavController().navigate(R.id.action_areaDetailFragment_to_plantDetailFragment)
         })
         recyclerView.adapter = plantAdapter
-        retryBtn.setOnClickListener { areaViewModel.loadFilteredPlants(area.E_Name) }
+
         plantAdapter.update(area)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            areaViewModel.loadFilteredPlants(area.E_Name)
+        }
 
         areaViewModel.filteredPlant.observe(viewLifecycleOwner, Observer {
             plantAdapter.update(it)
         })
 
         areaViewModel.loadingState.observe(viewLifecycleOwner, Observer {
-            progressBar.visibility =
-                if (it == LoadingState.LOADING) View.VISIBLE else View.GONE
-            errorPanel.visibility =
-                if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
+            swipeRefreshLayout.isRefreshing = it == LoadingState.LOADING
         })
         (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
         areaViewModel.loadFilteredPlants(area.E_Name)

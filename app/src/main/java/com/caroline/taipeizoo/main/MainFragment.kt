@@ -38,12 +38,15 @@ class MainFragment : Fragment() {
         retryBtn.setOnClickListener {
             viewModel.loadIntroduction()
         }
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.loadIntroduction()
+        }
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
-            progressBar.visibility =
-                if (it == LoadingState.LOADING) View.VISIBLE else View.GONE
             errorPanel.visibility =
                 if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
+
+            swipeRefreshLayout.isRefreshing = it == LoadingState.LOADING
         })
 
         viewModel.loadIntroduction()
