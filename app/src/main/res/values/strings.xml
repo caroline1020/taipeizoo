@@ -7,4 +7,6 @@
     <string name="functionality">功能性</string>
     <string name="last_update">最後更新 : %1$s</string>
     <string name="brief">簡介</string>
+    <string name="no_holiday_info">無休館資訊</string>
+    <string name="open_website">在網頁開啟</string>
 </resources>

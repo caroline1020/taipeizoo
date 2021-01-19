@@ -58,13 +58,14 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
         RecyclerView.ViewHolder(itemView) {
 
         private val titleText = itemView.titleText
+        private val holidayText = itemView.holidayText
         private val descText = itemView.descText
         private val icon = itemView.icon
 
         fun bind(item: Area) {
             titleText.text = item.E_Name
             descText.text = item.E_Info
-
+            holidayText.text=if(item.E_Memo.isEmpty())itemView.context.getString(R.string.no_holiday_info) else item.E_Memo
             Glide.with(itemView.context)
                 .load(item.E_Pic_URL)
                 .centerCrop()
