@@ -20,22 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:id="@+id/errorPanel"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:text="@string/error_please_try_again"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/retry"/>
-    </LinearLayout>
+
+    <include layout="@layout/view_error_panel" />
 </RelativeLayout>

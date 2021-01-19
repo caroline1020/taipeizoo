@@ -16,12 +16,10 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
 
-    private val TAG = "MainViewModel"
     private val _loading = MutableLiveData<LoadingState>()
     private val _data = MutableLiveData<List<Area>>()
     private val _selectedArea = MutableLiveData<Area>()
     private val _selectedPlant = MutableLiveData<Plant>()
-    private val _allPlant = MutableLiveData<List<Plant>>()
 
     val loading: LiveData<LoadingState>
         get() = _loading
@@ -45,7 +43,7 @@ class MainViewModel : ViewModel() {
             } catch (e: Exception) {
                 _data.value = ArrayList()
                 _loading.value = LoadingState.ERROR
-                Log.e(TAG, e.localizedMessage)
+                Log.e(Companion.TAG, e.toString())
 
             }
         }
@@ -63,11 +61,8 @@ class MainViewModel : ViewModel() {
     }
 
 
-    enum class LoadingState {
-        LOADING,
-        PENDING,
-        ERROR
-
+    companion object {
+        private const val TAG = "MainViewModel"
     }
 
 }

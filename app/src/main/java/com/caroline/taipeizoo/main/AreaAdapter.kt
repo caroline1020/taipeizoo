@@ -56,9 +56,9 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
     inner class InfoViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        val titleText = itemView.titleText
-        val descText = itemView.descText
-        val icon = itemView.icon
+        private val titleText = itemView.titleText
+        private val descText = itemView.descText
+        private val icon = itemView.icon
 
         fun bind(item: Area) {
             titleText.text = item.E_Name
@@ -68,7 +68,7 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
                 .load(item.E_Pic_URL)
                 .centerCrop()
                 .apply(options.override(200, 200))
-                .into(icon);
+                .into(icon)
         }
 
 

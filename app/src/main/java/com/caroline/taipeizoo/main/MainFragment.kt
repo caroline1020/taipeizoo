@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.caroline.taipeizoo.R
+import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.view_error_panel.*
 
 class MainFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
@@ -23,26 +23,31 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
 
-        return view
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { view,area ->
+        val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { v, area ->
             viewModel.selectArea(area)
-            view.findNavController().navigate(R.id.action_mainFragment_to_areaDetailFragment)
+            v.findNavController().navigate(R.id.action_mainFragment_to_areaDetailFragment)
         })
+
         recyclerView.adapter = mainAdapter
-        viewModel.loading.observe(this, Observer {
+        retryBtn.setOnClickListener {
+            viewModel.loadIntroduction()
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
             progressBar.visibility =
-                if (it == MainViewModel.LoadingState.LOADING) View.VISIBLE else View.GONE
+                if (it == LoadingState.LOADING) View.VISIBLE else View.GONE
             errorPanel.visibility =
-                if (it == MainViewModel.LoadingState.ERROR) View.VISIBLE else View.GONE
+                if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
         })
+
         viewModel.loadIntroduction()
-        viewModel.data.observe(this, Observer { it ->
+        viewModel.data.observe(viewLifecycleOwner, Observer {
             mainAdapter.update(it)
         })
 

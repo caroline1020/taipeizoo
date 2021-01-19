@@ -42,7 +42,7 @@ class PlantDetailFragment : Fragment() {
         recognizeText.text = plant.F_Feature
         functionText.text = plant.F_Function_Application
         lastUpdateText.text =
-            String.format(context!!.getString(R.string.last_update), plant.F_Update)
+            String.format(requireContext().getString(R.string.last_update), plant.F_Update)
 
 
     }
