@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -12,11 +13,10 @@ import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.view_error_panel.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class MainFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,29 +24,23 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
         val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { v, area ->
             viewModel.selectArea(area)
             v.findNavController().navigate(R.id.action_mainFragment_to_areaDetailFragment)
         })
 
-        recyclerView.adapter = mainAdapter
-        retryBtn.setOnClickListener {
-            viewModel.loadIntroduction()
-        }
-        swipeRefreshLayout.setOnRefreshListener {
-            viewModel.loadIntroduction()
+        view.recyclerView.adapter = mainAdapter
+
+        view.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.reloadArea()
         }
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
-            errorPanel.visibility =
-                if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
-
+        viewModel.loadingState.observe(viewLifecycleOwner, Observer {
             swipeRefreshLayout.isRefreshing = it == LoadingState.LOADING
+            if (it == LoadingState.ERROR) {
+                Toast.makeText(context, R.string.api_error_msg, Toast.LENGTH_SHORT).show()
+            }
         })
 
         viewModel.loadIntroduction()
@@ -54,5 +48,7 @@ class MainFragment : Fragment() {
             mainAdapter.update(it)
         })
 
+        return view
     }
+
 }

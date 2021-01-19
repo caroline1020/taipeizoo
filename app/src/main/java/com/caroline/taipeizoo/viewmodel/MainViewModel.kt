@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
     private val _selectedArea = MutableLiveData<Area>()
     private val _selectedPlant = MutableLiveData<Plant>()
 
-    val loading: LiveData<LoadingState>
+    val loadingState: LiveData<LoadingState>
         get() = _loading
 
     val data: LiveData<List<Area>>
@@ -31,8 +31,16 @@ class MainViewModel : ViewModel() {
     val selectedPlant: LiveData<Plant>
         get() = _selectedPlant
 
-    fun loadIntroduction() {
+    fun reloadArea() {
         if (_loading.value == LoadingState.LOADING) {
+            return
+        }
+        _data.value = ArrayList()
+        loadIntroduction()
+    }
+
+    fun loadIntroduction() {
+        if (_data.value != null && _data.value!!.isNotEmpty()) {
             return
         }
         _data.value = ArrayList()

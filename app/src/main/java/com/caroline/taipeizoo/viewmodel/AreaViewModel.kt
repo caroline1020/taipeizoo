@@ -24,8 +24,16 @@ class AreaViewModel : ViewModel() {
     val filteredPlant: LiveData<List<Plant>>
         get() = _filteredPlant
 
-    fun loadFilteredPlants(areaName: String) {
+    fun reloadFilteredPlants(areaName: String) {
         if (_loading.value == LoadingState.LOADING) {
+            return
+        }
+        _filteredPlant.value = ArrayList()
+        loadFilteredPlants(areaName)
+    }
+
+    fun loadFilteredPlants(areaName: String) {
+        if (_filteredPlant.value != null && _filteredPlant.value!!.isNotEmpty()) {
             return
         }
         _filteredPlant.value = ArrayList()
