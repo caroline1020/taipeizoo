@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.model.Area
-import kotlinx.android.synthetic.main.view_info_view_holder.view.*
+import kotlinx.android.synthetic.main.view_view_holder.view.*
 
 class AreaAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<AreaAdapter.InfoViewHolder>() {
@@ -33,7 +33,7 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
     private val data = ArrayList<Area>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_info_view_holder, parent, false)
+            .inflate(R.layout.view_view_holder, parent, false)
         return InfoViewHolder(itemView)
     }
 
@@ -51,7 +51,8 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
 
     val options = RequestOptions()
         .skipMemoryCache(true)
-        .placeholder(R.drawable.ic_launcher_foreground)
+        .error(R.drawable.image_not_found)
+        .placeholder(R.drawable.image_loading)
 
     inner class InfoViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {

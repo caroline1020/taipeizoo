@@ -34,7 +34,7 @@ class PlantDetailFragment : Fragment() {
 
     private fun updateContent(plant: Plant) {
         (activity as AppCompatActivity).supportActionBar?.title = plant.F_Name_Ch
-        Glide.with(this).load(plant.F_Pic01_URL).into(plantIcon)
+        Glide.with(this).load(plant.F_Pic01_URL).error(R.drawable.image_not_found).into(plantIcon)
         chineseNameText.text = plant.F_Name_Ch
         engNameText.text = plant.F_Name_En
         akaText.text = plant.F_AlsoKnown

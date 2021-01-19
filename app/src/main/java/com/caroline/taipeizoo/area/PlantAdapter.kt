@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.model.Plant
-import kotlinx.android.synthetic.main.view_info_view_holder.view.*
+import kotlinx.android.synthetic.main.view_view_holder.view.*
 
 class PlantAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<PlantAdapter.InfoViewHolder>() {
@@ -33,14 +33,14 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
     private val data = ArrayList<Plant>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_info_view_holder, parent, false)
+            .inflate(R.layout.view_view_holder, parent, false)
         return InfoViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: PlantAdapter.InfoViewHolder, position: Int) {
         val area: Plant = data[position]
         holder.bind(area)
-        holder.itemView.setOnClickListener { onClickListener.onClick(holder.itemView,area) }
+        holder.itemView.setOnClickListener { onClickListener.onClick(holder.itemView, area) }
     }
 
     fun update(newData: List<Plant>) {
@@ -50,15 +50,15 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
     }
 
     val options = RequestOptions()
-        .skipMemoryCache(true)
-        .placeholder(R.drawable.ic_launcher_foreground)
+        .skipMemoryCache(true).error(R.drawable.image_not_found)
+        .placeholder(R.drawable.image_loading)
 
     inner class InfoViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
-        val titleText = itemView.titleText
-        val descText = itemView.descText
-        val icon = itemView.icon
+        private val titleText = itemView.titleText
+        private val descText = itemView.descText
+        private val icon = itemView.icon
 
         fun bind(item: Plant) {
             titleText.text = item.F_Name_Ch
@@ -68,7 +68,7 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
                 .load(item.F_Pic01_URL)
                 .centerCrop()
                 .apply(options.override(200, 200))
-                .into(icon);
+                .into(icon)
         }
 
 

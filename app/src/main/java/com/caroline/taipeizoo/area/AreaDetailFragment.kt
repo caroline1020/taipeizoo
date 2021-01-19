@@ -64,7 +64,7 @@ class AreaDetailFragment : Fragment() {
     private fun updateContent(area: Area) {
 
         (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
-        Glide.with(this).load(area.E_Pic_URL).into(areaIcon)
+        Glide.with(this).load(area.E_Pic_URL).error(R.drawable.image_not_found).into(areaIcon)
         areaDescText.text = area.E_Info
         areaViewModel.loadFilteredPlants(area.E_Name)
     }
