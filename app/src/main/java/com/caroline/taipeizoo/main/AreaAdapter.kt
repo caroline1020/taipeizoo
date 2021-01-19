@@ -40,7 +40,7 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
     override fun onBindViewHolder(holder: AreaAdapter.InfoViewHolder, position: Int) {
         val area: Area = data[position]
         holder.bind(area)
-        holder.itemView.setOnClickListener { onClickListener.onClick(area) }
+        holder.itemView.setOnClickListener { onClickListener.onClick(holder.itemView, area) }
     }
 
     fun update(newData: List<Area>) {
@@ -74,9 +74,10 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
 
     }
 
-    class OnClickListener(val clickListener: (area: Area) -> Unit) {
-        fun onClick(area: Area) = clickListener(area)
+    class OnClickListener(val clickListener: (view: View, area: Area) -> Unit) {
+        fun onClick(view: View, area: Area) = clickListener(view, area)
     }
+
 
     override fun getItemCount(): Int {
         return data.size

@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Area
 import com.caroline.taipeizoo.model.Plant
 import kotlinx.android.synthetic.main.view_info_view_holder.view.*
 
@@ -41,7 +40,7 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
     override fun onBindViewHolder(holder: PlantAdapter.InfoViewHolder, position: Int) {
         val area: Plant = data[position]
         holder.bind(area)
-        holder.itemView.setOnClickListener { onClickListener.onClick(area) }
+        holder.itemView.setOnClickListener { onClickListener.onClick(holder.itemView,area) }
     }
 
     fun update(newData: List<Plant>) {
@@ -75,8 +74,8 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
 
     }
 
-    class OnClickListener(val clickListener: (area: Plant) -> Unit) {
-        fun onClick(area: Plant) = clickListener(area)
+    class OnClickListener(val clickListener: (view: View, plant: Plant) -> Unit) {
+        fun onClick(view: View, area: Plant) = clickListener(view, area)
     }
 
     override fun getItemCount(): Int {

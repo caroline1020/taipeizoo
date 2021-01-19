@@ -1,4 +1,4 @@
-package com.caroline.taipeizoo.main.MainFragment
+package com.caroline.taipeizoo.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.main.AreaAdapter
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -28,9 +30,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { it ->
-            viewModel.selectArea(it)
-
+        val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { view,area ->
+            viewModel.selectArea(area)
+            view.findNavController().navigate(R.id.action_mainFragment_to_areaDetailFragment)
         })
         recyclerView.adapter = mainAdapter
         viewModel.loading.observe(this, Observer {

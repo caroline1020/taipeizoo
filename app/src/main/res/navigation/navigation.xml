@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        tools:layout="@layout/fragment_main"
+        android:name="com.caroline.taipeizoo.main.MainFragment"
+        android:label="@string/app_name">
+
+        <action
+            android:id="@+id/action_mainFragment_to_areaDetailFragment"
+            app:destination="@id/areaDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/areaDetailFragment"
+        android:name="com.caroline.taipeizoo.area.AreaDetailFragment"
+        tools:layout="@layout/fragment_area"
+        android:label="AreaDetailFragment">
+
+        <action
+            android:id="@+id/action_areaDetailFragment_to_plantDetailFragment"
+            app:destination="@id/plantDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantDetailFragment"
+        tools:layout="@layout/fragment_plant"
+        android:name="com.caroline.taipeizoo.plant.PlantDetailFragment"
+        android:label="PlantDetailFragment">
+
+    </fragment>
+</navigation>

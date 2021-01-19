@@ -5,6 +5,7 @@ plugins {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -57,7 +58,7 @@ dependencies {
     // Skip this if you don't want to use integration libraries or configure Glide.
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
-    def nav_version = "2.1.0"
+    def nav_version = "2.3.0"
 
     // Kotlin
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

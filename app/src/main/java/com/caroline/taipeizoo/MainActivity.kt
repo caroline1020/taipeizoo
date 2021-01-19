@@ -2,11 +2,9 @@ package com.caroline.taipeizoo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.caroline.taipeizoo.area.AreaDetailFragment
-import com.caroline.taipeizoo.main.MainFragment.MainFragment
-import com.caroline.taipeizoo.plant.PlantDetailFragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -18,35 +16,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, MainFragment())
-        transaction.commit()
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        NavigationUI.setupActionBarWithNavController(this, navController)
 
-        viewModel.selectedArea.observe(this, Observer {
-            if (it != null) {
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.add(R.id.fragment_container, AreaDetailFragment())
-                transaction.addToBackStack("Area")
-                transaction.commit()
-            }
-
-        })
-        viewModel.selectedPlant.observe(this, Observer {
-            if (it != null) {
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.add(R.id.fragment_container, PlantDetailFragment())
-                transaction.addToBackStack("Area")
-                transaction.commit()
-            }
-
-        })
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
+
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = this.findNavController(R.id.myNavHostFragment)
+//        return navController.navigateUp()
+//    }
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+        val navController = findNavController(R.id.myNavHostFragment)
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
 }

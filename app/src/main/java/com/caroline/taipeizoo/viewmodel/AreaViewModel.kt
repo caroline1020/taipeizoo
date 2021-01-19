@@ -24,13 +24,15 @@ class AreaViewModel : ViewModel() {
         get() = _filteredPlant
 
     fun filterPlant(areaName: String) {
-
+        if (_filteredPlant.value != null && _filteredPlant.value!!.isNotEmpty()) {
+            return
+        }
         viewModelScope.launch {
             _loading.value = true
             val filter = ZooApi.retrofitService.getPlants().result.results.filter { it ->
                 it.F_Location.contains(areaName)
             }
-            val set=HashSet(filter)
+            val set = HashSet(filter)
             _filteredPlant.value = ArrayList(set)
             _loading.value = false
         }
