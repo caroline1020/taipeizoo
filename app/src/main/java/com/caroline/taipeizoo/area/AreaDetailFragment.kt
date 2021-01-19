@@ -26,6 +26,7 @@ class AreaDetailFragment : Fragment() {
         ViewModelProvider(this).get(AreaViewModel::class.java)
     }
 
+
     private lateinit var area: Area
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +34,9 @@ class AreaDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
         val view = inflater.inflate(R.layout.fragment_area, container, false)
         area = mainViewModel.selectedArea.value!!
+        (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
         val plantAdapter = AreaDetailAdapter(AreaDetailAdapter.OnClickListener { v, plant ->
             mainViewModel.selectedPlant(plant)
             v.findNavController().navigate(R.id.action_areaDetailFragment_to_plantDetailFragment)
