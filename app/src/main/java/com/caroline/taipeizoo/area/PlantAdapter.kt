@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.model.Plant
-import kotlinx.android.synthetic.main.view_view_holder.view.*
+import kotlinx.android.synthetic.main.item_view_holder.view.*
 
 class PlantAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<PlantAdapter.InfoViewHolder>() {
@@ -33,7 +33,7 @@ class PlantAdapter(private val onClickListener: OnClickListener) :
     private val data = ArrayList<Plant>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlantAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_view_holder, parent, false)
+            .inflate(R.layout.item_view_holder, parent, false)
         return InfoViewHolder(itemView)
     }
 
