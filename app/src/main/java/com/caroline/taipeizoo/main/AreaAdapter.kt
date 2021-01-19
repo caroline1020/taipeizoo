@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
+import com.caroline.taipeizoo.area.getHoliday
 import com.caroline.taipeizoo.model.Area
 import kotlinx.android.synthetic.main.item_view_holder.view.*
 
@@ -65,7 +66,7 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
         fun bind(item: Area) {
             titleText.text = item.E_Name
             descText.text = item.E_Info
-            holidayText.text=if(item.E_Memo.isEmpty())itemView.context.getString(R.string.no_holiday_info) else item.E_Memo
+            holidayText.text = item.getHoliday(itemView.context)
             Glide.with(itemView.context)
                 .load(item.E_Pic_URL)
                 .centerCrop()

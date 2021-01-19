@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="136dp"
     android:background="@drawable/bg_item"
-    android:padding="@dimen/margin_frame">
+    android:paddingLeft="@dimen/margin_frame"
+    android:paddingTop="@dimen/margin_frame"
+    android:paddingRight="@dimen/margin_frame">
 
     <ImageView
         android:id="@+id/icon"
@@ -23,18 +25,20 @@
 
     <TextView
         android:id="@+id/titleText"
-        style="@style/TextAppearance.AppCompat.Large"
+        style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_toLeftOf="@id/arrow"
         android:layout_toRightOf="@id/icon"
+        android:ellipsize="end"
+        android:lines="1"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/descText"
-        style="@style/TextAppearance.AppCompat.Subhead"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleText"
@@ -46,7 +50,7 @@
 
     <TextView
         android:id="@+id/holidayText"
-        style="@style/TextAppearance.AppCompat.Subhead"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descText"
@@ -54,4 +58,12 @@
         android:layout_toRightOf="@id/icon"
         android:ellipsize="end"
         android:lines="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginTop="@dimen/margin_frame"
+        android:background="@color/gray" />
 </RelativeLayout>

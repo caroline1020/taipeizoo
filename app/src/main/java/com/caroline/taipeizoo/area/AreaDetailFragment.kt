@@ -1,5 +1,6 @@
 package com.caroline.taipeizoo.area
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.model.Area
 import com.caroline.taipeizoo.viewmodel.AreaViewModel
@@ -39,17 +39,16 @@ class AreaDetailFragment : Fragment() {
 
         var area = mainViewModel.selectedArea.value!!
 
-        val plantAdapter = PlantAdapter(PlantAdapter.OnClickListener { v, plant ->
+        val plantAdapter = AreaDetailAdapter(AreaDetailAdapter.OnClickListener { v, plant ->
             mainViewModel.selectedPlant(plant)
             v.findNavController().navigate(R.id.action_areaDetailFragment_to_plantDetailFragment)
         })
         recyclerView.adapter = plantAdapter
         retryBtn.setOnClickListener { areaViewModel.loadFilteredPlants(area.E_Name) }
-
+        plantAdapter.update(area)
 
         areaViewModel.filteredPlant.observe(viewLifecycleOwner, Observer {
             plantAdapter.update(it)
-
         })
 
         areaViewModel.loadingState.observe(viewLifecycleOwner, Observer {
@@ -58,15 +57,16 @@ class AreaDetailFragment : Fragment() {
             errorPanel.visibility =
                 if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
         })
-        updateContent(area)
-    }
-
-    private fun updateContent(area: Area) {
-
         (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
-        Glide.with(this).load(area.E_Pic_URL).error(R.drawable.image_not_found).into(areaIcon)
-        areaDescText.text = area.E_Info
         areaViewModel.loadFilteredPlants(area.E_Name)
     }
 
+
+}
+
+fun Area.getHoliday(context: Context): String {
+    if (E_Memo.isEmpty()) {
+        return context.getString(R.string.no_holiday_info)
+    }
+    return E_Memo
 }
