@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -16,7 +17,6 @@ import com.caroline.taipeizoo.viewmodel.AreaViewModel
 import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_area.*
-import kotlinx.android.synthetic.main.fragment_area.recyclerView
 import kotlinx.android.synthetic.main.view_error_panel.*
 
 class AreaDetailFragment : Fragment() {
@@ -33,13 +33,11 @@ class AreaDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_area, container, false)
     }
 
-    private lateinit var area: Area
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        area = mainViewModel.selectedArea.value!!
+        var area = mainViewModel.selectedArea.value!!
 
         val plantAdapter = PlantAdapter(PlantAdapter.OnClickListener { v, plant ->
             mainViewModel.selectedPlant(plant)
@@ -60,12 +58,12 @@ class AreaDetailFragment : Fragment() {
             errorPanel.visibility =
                 if (it == LoadingState.ERROR) View.VISIBLE else View.GONE
         })
-        updateContent()
+        updateContent(area)
     }
 
-    private fun updateContent() {
+    private fun updateContent(area: Area) {
 
-        activity?.title = area.E_Name
+        (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
         Glide.with(this).load(area.E_Pic_URL).into(areaIcon)
         areaDescText.text = area.E_Info
         areaViewModel.loadFilteredPlants(area.E_Name)

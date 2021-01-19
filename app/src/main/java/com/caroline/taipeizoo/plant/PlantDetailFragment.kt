@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -27,13 +28,12 @@ class PlantDetailFragment : Fragment() {
         val plant = mainViewModel.selectedPlant.value
         plant?.let {
             updateContent(plant)
-
         }
 
     }
 
     private fun updateContent(plant: Plant) {
-        activity?.title = plant.F_Name_Ch
+        (activity as AppCompatActivity).supportActionBar?.title = plant.F_Name_Ch
         Glide.with(this).load(plant.F_Pic01_URL).into(plantIcon)
         chineseNameText.text = plant.F_Name_Ch
         engNameText.text = plant.F_Name_En
@@ -43,7 +43,6 @@ class PlantDetailFragment : Fragment() {
         functionText.text = plant.F_Function_Application
         lastUpdateText.text =
             String.format(requireContext().getString(R.string.last_update), plant.F_Update)
-
 
     }
 
