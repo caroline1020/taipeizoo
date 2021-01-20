@@ -43,7 +43,6 @@ class MainViewModel : ViewModel() {
         if (_data.value != null && _data.value!!.isNotEmpty()) {
             return
         }
-        _data.value = ArrayList()
         viewModelScope.launch {
             _loading.value = LoadingState.LOADING
             try {
@@ -53,7 +52,6 @@ class MainViewModel : ViewModel() {
                 _data.value = ArrayList()
                 _loading.value = LoadingState.ERROR
                 Log.e(Companion.TAG, e.toString())
-
             }
         }
 
