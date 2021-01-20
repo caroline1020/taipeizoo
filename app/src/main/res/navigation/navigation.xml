@@ -12,7 +12,7 @@
         android:label="@string/app_name">
 
         <action
-            android:id="@+id/action_mainFragment_to_areaDetailFragment"
+            android:id="@+id/action_mainFragment_to_zoneDetailFragment"
             app:destination="@id/areaDetailFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
@@ -21,13 +21,17 @@
     </fragment>
     <fragment
         android:id="@+id/areaDetailFragment"
-        android:name="com.caroline.taipeizoo.area.AreaDetailFragment"
-        tools:layout="@layout/fragment_area"
+        android:name="com.caroline.taipeizoo.zoneDetail.ZoneDetailFragment"
+        tools:layout="@layout/fragment_zone_detail"
         android:label="AreaDetailFragment">
 
         <action
-            android:id="@+id/action_areaDetailFragment_to_plantDetailFragment"
-            app:destination="@id/plantDetailFragment" />
+            android:id="@+id/action_zoneDetailFragment_to_plantDetailFragment"
+            app:destination="@id/plantDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/plantDetailFragment"

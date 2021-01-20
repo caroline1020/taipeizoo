@@ -2,14 +2,14 @@ package com.caroline.taipeizoo.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.Zone
 import com.caroline.taipeizoo.model.Plant
 
 /**
  * Created by nini on 2021/1/20.
  */
 @Entity
-data class DatabaseArea constructor(
+data class DatabaseZone constructor(
     @PrimaryKey
     val _id: Int,
     val name: String,
@@ -22,9 +22,9 @@ data class DatabaseArea constructor(
     val memo: String
 )
 
-fun List<DatabaseArea>.asAreaDomainModel(): List<Area> {
+fun List<DatabaseZone>.asZoneDomainModel(): List<Zone> {
     return map {
-        Area(
+        Zone(
             it.category,
             it.geo,
             it.info,

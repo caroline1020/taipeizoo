@@ -1,8 +1,8 @@
 package com.caroline.taipeizoo.network
 
-import com.caroline.taipeizoo.database.DatabaseArea
+import com.caroline.taipeizoo.database.DatabaseZone
 import com.caroline.taipeizoo.database.DatabasePlant
-import com.caroline.taipeizoo.model.AreaResponse
+import com.caroline.taipeizoo.model.ZoneResponse
 import com.caroline.taipeizoo.model.PlantResponse
 import com.squareup.moshi.JsonClass
 
@@ -12,12 +12,12 @@ import com.squareup.moshi.JsonClass
 
 
 @JsonClass(generateAdapter = true)
-data class NetworkAreaContainer(val areaResponse: AreaResponse)
+data class NetworkAreaContainer(val areaResponse: ZoneResponse)
 
-fun NetworkAreaContainer.asDatabaseModel(): List<DatabaseArea> {
+fun NetworkAreaContainer.asDatabaseModel(): List<DatabaseZone> {
     val areaList = areaResponse.result.results
     return areaList.map {
-        DatabaseArea(
+        DatabaseZone(
             it._id,
             it.E_Name,
             it.E_Geo,

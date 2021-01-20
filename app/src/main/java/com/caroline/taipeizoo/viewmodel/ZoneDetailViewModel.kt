@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 /**
  * Created by nini on 2021/1/18.
  */
-class AreaViewModel(application: Application) :
+class ZoneDetailViewModel(application: Application) :
     AndroidViewModel(application) {
 
     private val plantRepository = PlantsRepository(getDatabase(application))
@@ -44,15 +44,15 @@ class AreaViewModel(application: Application) :
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AreaViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(ZoneDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AreaViewModel(app) as T
+                return ZoneDetailViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 
     companion object {
-        private const val TAG = "AreaViewModel"
+        private const val TAG = "ZoneDetailViewModel"
     }
 }

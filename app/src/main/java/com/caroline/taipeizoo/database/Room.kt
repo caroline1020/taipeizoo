@@ -9,12 +9,12 @@ import androidx.room.*
  */
 
 @Dao
-interface AreaDao {
-    @Query("select * from databasearea")
-    fun getAreas(): LiveData<List<DatabaseArea>>
+interface ZoneDao {
+    @Query("select * from databasezone")
+    fun getZones(): LiveData<List<DatabaseZone>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(videos: List<DatabaseArea>)
+    fun insertAll(videos: List<DatabaseZone>)
 }
 
 @Dao
@@ -23,16 +23,13 @@ interface PlantDao {
     @Query("select * from databaseplant")
     fun getPlants(): LiveData<List<DatabasePlant>>
 
-//    @Query("select * from databaseplant")
-//    fun getPlantsByLocation(location: String): LiveData<List<DatabasePlant>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(plants: List<DatabasePlant>)
 }
 
-@Database(entities = [DatabaseArea::class, DatabasePlant::class], version = 1)
+@Database(entities = [DatabaseZone::class, DatabasePlant::class], version = 1)
 abstract class ZooDatabase : RoomDatabase() {
-    abstract val areaDao: AreaDao
+    abstract val zoneDao: ZoneDao
     abstract val plantDao: PlantDao
 }
 
@@ -45,7 +42,7 @@ fun getDatabase(context: Context): ZooDatabase {
             INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
                 ZooDatabase::class.java,
-                "areas"
+                "Zoo"
             ).build()
         }
     }

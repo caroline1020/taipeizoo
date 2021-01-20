@@ -1,6 +1,6 @@
-package com.caroline.taipeizoo.area
+package com.caroline.taipeizoo.zoneDetail
 
-import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.Zone
 import com.caroline.taipeizoo.model.Plant
 
 /**
@@ -10,7 +10,7 @@ sealed class DataItem {
     data class PlantItem(val plant: Plant) : DataItem() {
         override val id = plant._id.toLong()
     }
-    data class HeaderItem(val area: Area) : DataItem() {
+    data class HeaderItem(val area: Zone) : DataItem() {
         override val id = Long.MIN_VALUE
     }
 

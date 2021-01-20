@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.caroline.taipeizoo.database.getDatabase
-import com.caroline.taipeizoo.repository.AreasRepository
+import com.caroline.taipeizoo.repository.ZonesRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -14,33 +14,27 @@ import java.io.IOException
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val areasRepository = AreasRepository(getDatabase(application))
-    val areaList = areasRepository.areas
-    private val _loading = MutableLiveData<LoadingState>()
+    private val zonesRepository = ZonesRepository(getDatabase(application))
+    val zoneList = zonesRepository.zones
+    private val _loadingState = MutableLiveData<LoadingState>()
 
     val loadingState: LiveData<LoadingState>
-        get() = _loading
+        get() = _loadingState
 
 
-    fun refreshAreas() {
-        if (_loading.value == LoadingState.LOADING) {
+    fun refreshZones() {
+        if (_loadingState.value == LoadingState.LOADING) {
             return
         }
-        _loading.value = LoadingState.LOADING
+        _loadingState.value = LoadingState.LOADING
         viewModelScope.launch {
             try {
-                areasRepository.refreshAreas()
-                _loading.value = LoadingState.PENDING
+                zonesRepository.refreshZones()
+                _loadingState.value = LoadingState.PENDING
             } catch (networkError: IOException) {
-                _loading.value = LoadingState.ERROR
-                Log.e(Companion.TAG, networkError.toString())
+                _loadingState.value = LoadingState.ERROR
+                Log.e(TAG, networkError.toString())
             }
-        }
-    }
-
-    fun loadAreas() {
-        if (areaList.value == null || areaList.value!!.isEmpty()) {
-            refreshAreas()
         }
     }
 

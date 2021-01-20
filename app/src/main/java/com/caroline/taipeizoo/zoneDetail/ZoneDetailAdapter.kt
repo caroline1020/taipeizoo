@@ -15,7 +15,7 @@
  *
  */
 
-package com.caroline.taipeizoo.area
+package com.caroline.taipeizoo.zoneDetail
 
 import android.content.Intent
 import android.net.Uri
@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.Zone
 import com.caroline.taipeizoo.model.Plant
 import kotlinx.android.synthetic.main.item_header.view.*
 import kotlinx.android.synthetic.main.item_view_holder.view.*
@@ -36,10 +36,9 @@ import kotlinx.android.synthetic.main.item_view_holder.view.holidayText
 
 class AreaDetailAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<DataItem, RecyclerView.ViewHolder>(AreaDetailDiffCallback()) {
-    private val ITEM_VIEW_TYPE_HEADER = 0
-    private val ITEM_VIEW_TYPE_ITEM = 1
+
     private val data = ArrayList<Plant>()
-    private lateinit var area: Area
+    private lateinit var area: Zone
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -104,7 +103,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
             }
         }
 
-        fun bind(area: Area, itemCount: Int) {
+        fun bind(area: Zone, itemCount: Int) {
             Glide.with(itemView.context).load(area.E_Pic_URL).error(R.drawable.image_not_found)
                 .into(areaIcon)
             areaDescText.text = area.E_Info
@@ -159,7 +158,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
         return data.size + 1
     }
 
-    fun update(area: Area) {
+    fun update(area: Zone) {
         this.area = area
         notifyItemInserted(0)
     }
@@ -168,6 +167,11 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
         data.clear()
         data.addAll(newData)
         notifyDataSetChanged()
+    }
+
+    companion object {
+        private const val ITEM_VIEW_TYPE_HEADER = 0
+        private const val ITEM_VIEW_TYPE_ITEM = 1
     }
 
 }

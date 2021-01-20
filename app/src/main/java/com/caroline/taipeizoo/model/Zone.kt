@@ -2,7 +2,7 @@ package com.caroline.taipeizoo.model
 
 import java.io.Serializable
 
-data class Area(
+data class Zone(
     val E_Category: String,
     val E_Geo: String,
     val E_Info: String,

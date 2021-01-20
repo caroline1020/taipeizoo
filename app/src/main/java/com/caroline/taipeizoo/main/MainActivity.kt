@@ -1,11 +1,10 @@
-package com.caroline.taipeizoo
+package com.caroline.taipeizoo.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.caroline.taipeizoo.viewmodel.MainViewModel
+import com.caroline.taipeizoo.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,10 +17,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = this.findNavController(R.id.myNavHostFragment)
-//        return navController.navigateUp()
-//    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.myNavHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()

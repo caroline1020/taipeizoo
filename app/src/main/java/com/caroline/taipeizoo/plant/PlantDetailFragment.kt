@@ -47,7 +47,7 @@ class PlantDetailFragment : Fragment() {
     }
 
     companion object {
-        public const val KEY_PLANT = "Plant"
+        const val KEY_PLANT = "Plant"
     }
 
 
