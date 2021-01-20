@@ -140,6 +140,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
         fun bind(item: Plant) {
             titleText.text = item.F_Name_Ch
             descText.text = item.F_AlsoKnown
+            icon.clipToOutline = true
             Glide.with(itemView.context)
                 .load(item.F_Pic01_URL)
                 .centerCrop()

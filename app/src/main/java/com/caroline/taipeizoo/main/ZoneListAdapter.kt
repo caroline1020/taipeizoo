@@ -67,6 +67,7 @@ class ZoneListAdapter(private val onClickListener: OnClickListener) :
             titleText.text = item.E_Name
             descText.text = item.E_Info
             holidayText.text = item.getHoliday(itemView.context)
+            icon.clipToOutline = true
             Glide.with(itemView.context)
                 .load(item.E_Pic_URL)
                 .centerCrop()
