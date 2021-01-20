@@ -25,13 +25,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.area.getHoliday
-import com.caroline.taipeizoo.model.NetworkArea
+import com.caroline.taipeizoo.model.Area
 import kotlinx.android.synthetic.main.item_view_holder.view.*
 
 class AreaAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<AreaAdapter.InfoViewHolder>() {
 
-    private val data = ArrayList<NetworkArea>()
+    private val data = ArrayList<Area>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_view_holder, parent, false)
@@ -39,12 +39,12 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
     }
 
     override fun onBindViewHolder(holder: AreaAdapter.InfoViewHolder, position: Int) {
-        val area: NetworkArea = data[position]
+        val area: Area = data[position]
         holder.bind(area)
         holder.itemView.setOnClickListener { onClickListener.onClick(holder.itemView, area) }
     }
 
-    fun update(newData: List<NetworkArea>) {
+    fun update(newData: List<Area>) {
         data.clear()
         data.addAll(newData)
         notifyDataSetChanged()
@@ -63,7 +63,7 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
         private val descText = itemView.descText
         private val icon = itemView.icon
 
-        fun bind(item: NetworkArea) {
+        fun bind(item: Area) {
             titleText.text = item.E_Name
             descText.text = item.E_Info
             holidayText.text = item.getHoliday(itemView.context)
@@ -77,8 +77,8 @@ class AreaAdapter(private val onClickListener: OnClickListener) :
 
     }
 
-    class OnClickListener(val clickListener: (view: View, area: NetworkArea) -> Unit) {
-        fun onClick(view: View, area: NetworkArea) = clickListener(view, area)
+    class OnClickListener(val clickListener: (view: View, area: Area) -> Unit) {
+        fun onClick(view: View, area: Area) = clickListener(view, area)
     }
 
 

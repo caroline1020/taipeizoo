@@ -4,6 +4,6 @@ data class AreaResult(
     val count: Int,
     val limit: Int,
     val offset: Int,
-    val results: List<NetworkArea>,
+    val results: List<Area>,
     val sort: String
 )

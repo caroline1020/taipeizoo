@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.caroline.taipeizoo.R
+import com.caroline.taipeizoo.area.AreaDetailFragment
 import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -33,7 +34,7 @@ class MainFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         val mainAdapter = AreaAdapter(AreaAdapter.OnClickListener { v, area ->
             val bundle = Bundle()
-            bundle.putSerializable("Area", area)
+            bundle.putSerializable(AreaDetailFragment.KEY_AREA, area)
             v.findNavController().navigate(R.id.action_mainFragment_to_areaDetailFragment, bundle)
         })
 
@@ -57,7 +58,7 @@ class MainFragment : Fragment() {
 
         viewModel.areaList.observe(viewLifecycleOwner, Observer {
             mainAdapter.update(it)
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 viewModel.loadAreas()
             }
         })

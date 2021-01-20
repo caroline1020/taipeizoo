@@ -6,34 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.caroline.taipeizoo.R
 import com.caroline.taipeizoo.model.Plant
-import com.caroline.taipeizoo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_plant.*
 
 class PlantDetailFragment : Fragment() {
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private lateinit var plant: Plant
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_plant, container, false)
+
+
+        val view = inflater.inflate(R.layout.fragment_plant, container, false)
+
+        val requireArguments = requireArguments()
+        plant = requireArguments.get(KEY_PLANT) as Plant
+        (activity as AppCompatActivity).supportActionBar?.title = plant.F_Name_Ch
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val plant = mainViewModel.selectedPlant.value
-        plant?.let {
-            updateContent(plant)
-        }
-
+        updateContent()
     }
 
-    private fun updateContent(plant: Plant) {
-        (activity as AppCompatActivity).supportActionBar?.title = plant.F_Name_Ch
+    private fun updateContent() {
         Glide.with(this).load(plant.F_Pic01_URL).error(R.drawable.image_not_found).into(plantIcon)
         chineseNameText.text = plant.F_Name_Ch
         engNameText.text = plant.F_Name_En
@@ -44,6 +44,10 @@ class PlantDetailFragment : Fragment() {
         lastUpdateText.text =
             String.format(requireContext().getString(R.string.last_update), plant.F_Update)
 
+    }
+
+    companion object {
+        public const val KEY_PLANT = "Plant"
     }
 
 

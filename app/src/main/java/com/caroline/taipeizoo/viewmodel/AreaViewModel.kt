@@ -1,58 +1,54 @@
 package com.caroline.taipeizoo.viewmodel
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.caroline.taipeizoo.model.Plant
-import com.caroline.taipeizoo.network.ZooApi
+import androidx.lifecycle.*
+import com.caroline.taipeizoo.database.getDatabase
+import com.caroline.taipeizoo.repository.PlantsRepository
 import kotlinx.coroutines.launch
 
 /**
  * Created by nini on 2021/1/18.
  */
-class AreaViewModel : ViewModel() {
+class AreaViewModel(application: Application) :
+    AndroidViewModel(application) {
 
-
+    private val plantRepository = PlantsRepository(getDatabase(application))
+    val plantList = plantRepository.plants
     private val _loading = MutableLiveData<LoadingState>()
-    private val _filteredPlant = MutableLiveData<List<Plant>>()
+
 
     val loadingState: LiveData<LoadingState>
         get() = _loading
 
-    val filteredPlant: LiveData<List<Plant>>
-        get() = _filteredPlant
-
-    fun reloadFilteredPlants(areaName: String) {
+    fun refreshPlants() {
         if (_loading.value == LoadingState.LOADING) {
             return
         }
-        _filteredPlant.value = ArrayList()
-        loadFilteredPlants(areaName)
-    }
-
-    fun loadFilteredPlants(areaName: String) {
-        if (_filteredPlant.value != null && _filteredPlant.value!!.isNotEmpty()) {
-            return
-        }
-        _filteredPlant.value = ArrayList()
         viewModelScope.launch {
-
             _loading.value = LoadingState.LOADING
             try {
-                val filter = ZooApi.retrofitService.getPlants().result.results.filter {
-                    it.F_Location.contains(areaName)
-                }
-                //filter duplicate items
-                val set = HashSet(filter)
-                _filteredPlant.value = ArrayList(set)
+                plantRepository.refreshPlants()
                 _loading.value = LoadingState.PENDING
 
             } catch (e: Exception) {
                 _loading.value = LoadingState.ERROR
                 Log.e(TAG, e.toString())
             }
+        }
+    }
+
+
+    /**
+     * Factory for constructing ViewModel with parameter
+     */
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(AreaViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return AreaViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 

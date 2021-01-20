@@ -17,20 +17,36 @@ interface AreaDao {
     fun insertAll(videos: List<DatabaseArea>)
 }
 
-@Database(entities = [DatabaseArea::class], version = 1)
-abstract class AreasDatabase: RoomDatabase() {
+@Dao
+interface PlantDao {
+
+    @Query("select * from databaseplant")
+    fun getPlants(): LiveData<List<DatabasePlant>>
+
+//    @Query("select * from databaseplant")
+//    fun getPlantsByLocation(location: String): LiveData<List<DatabasePlant>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(plants: List<DatabasePlant>)
+}
+
+@Database(entities = [DatabaseArea::class, DatabasePlant::class], version = 1)
+abstract class ZooDatabase : RoomDatabase() {
     abstract val areaDao: AreaDao
+    abstract val plantDao: PlantDao
 }
 
 
-private lateinit var INSTANCE: AreasDatabase
+private lateinit var INSTANCE: ZooDatabase
 
-fun getDatabase(context: Context): AreasDatabase {
-    synchronized(AreasDatabase::class.java) {
+fun getDatabase(context: Context): ZooDatabase {
+    synchronized(ZooDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
-            INSTANCE = Room.databaseBuilder(context.applicationContext,
-                AreasDatabase::class.java,
-                "areas").build()
+            INSTANCE = Room.databaseBuilder(
+                context.applicationContext,
+                ZooDatabase::class.java,
+                "areas"
+            ).build()
         }
     }
     return INSTANCE

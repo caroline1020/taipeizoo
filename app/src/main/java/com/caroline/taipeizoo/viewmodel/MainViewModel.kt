@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.caroline.taipeizoo.database.getDatabase
-import com.caroline.taipeizoo.model.Plant
 import com.caroline.taipeizoo.repository.AreasRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -18,12 +17,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val areasRepository = AreasRepository(getDatabase(application))
     val areaList = areasRepository.areas
     private val _loading = MutableLiveData<LoadingState>()
-    private val _selectedPlant = MutableLiveData<Plant>()
 
     val loadingState: LiveData<LoadingState>
         get() = _loading
-    val selectedPlant: LiveData<Plant>
-        get() = _selectedPlant
 
 
     fun refreshAreas() {
@@ -48,13 +44,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun selectedPlant(plant: Plant) {
-
-        _selectedPlant.value = plant
-    }
-
     /**
-     * Factory for constructing DevByteViewModel with parameter
+     * Factory for constructing ViewModel with parameter
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
