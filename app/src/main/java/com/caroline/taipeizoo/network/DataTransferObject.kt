@@ -35,9 +35,10 @@ fun NetworkAreaContainer.asDatabaseModel(): List<DatabaseZone> {
 data class NetworkPlantContainer(val plantResponse: PlantResponse)
 
 fun NetworkPlantContainer.asDatabaseModel(): List<DatabasePlant> {
-    val areaList = plantResponse.result.results.distinctBy { it._id }
+    val areaList = plantResponse.result.results
     return areaList.map {
         DatabasePlant(
+            it.F_Name_Ch,
             it.F_AlsoKnown,
             it.F_Brief,
             it.F_Code,
@@ -52,8 +53,8 @@ fun NetworkPlantContainer.asDatabaseModel(): List<DatabasePlant> {
             it.F_Pic01_URL,
             it.F_Summary,
             it.F_Update,
-            it._id,
-            it.F_Name_Ch
+            it._id
+
         )
     }
 }

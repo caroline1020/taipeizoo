@@ -41,6 +41,7 @@ fun List<DatabaseZone>.asZoneDomainModel(): List<Zone> {
 @Entity
 data class DatabasePlant constructor(
     @PrimaryKey
+    val name_ch: String,
     val aka: String,
     val brief: String,
     val code: String,
@@ -55,8 +56,7 @@ data class DatabasePlant constructor(
     val pic_url: String,
     val summary: String,
     val update: String,
-    val _id: Int,
-    val name_ch: String
+    val _id: Int
 
 )
 
