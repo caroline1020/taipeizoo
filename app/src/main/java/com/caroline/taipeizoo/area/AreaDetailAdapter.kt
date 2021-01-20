@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.NetworkArea
 import com.caroline.taipeizoo.model.Plant
 import kotlinx.android.synthetic.main.item_header.view.*
 import kotlinx.android.synthetic.main.item_view_holder.view.*
@@ -39,7 +39,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
     private val ITEM_VIEW_TYPE_HEADER = 0
     private val ITEM_VIEW_TYPE_ITEM = 1
     private val data = ArrayList<Plant>()
-    private lateinit var area: Area
+    private lateinit var area: NetworkArea
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -104,7 +104,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
             }
         }
 
-        fun bind(area: Area, itemCount: Int) {
+        fun bind(area: NetworkArea, itemCount: Int) {
             Glide.with(itemView.context).load(area.E_Pic_URL).error(R.drawable.image_not_found)
                 .into(areaIcon)
             areaDescText.text = area.E_Info
@@ -159,7 +159,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
         return data.size + 1
     }
 
-    fun update(area: Area) {
+    fun update(area: NetworkArea) {
         this.area = area
         notifyItemInserted(0)
     }

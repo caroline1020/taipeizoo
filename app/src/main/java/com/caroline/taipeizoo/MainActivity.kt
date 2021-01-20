@@ -8,10 +8,6 @@ import androidx.navigation.ui.NavigationUI
 import com.caroline.taipeizoo.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

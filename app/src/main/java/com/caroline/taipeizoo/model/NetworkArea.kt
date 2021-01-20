@@ -1,6 +1,8 @@
 package com.caroline.taipeizoo.model
 
-data class Area(
+import java.io.Serializable
+
+data class NetworkArea(
     val E_Category: String,
     val E_Geo: String,
     val E_Info: String,
@@ -10,4 +12,4 @@ data class Area(
     val E_URL: String,
     val E_no: String,
     val _id: Int
-)
+) : Serializable

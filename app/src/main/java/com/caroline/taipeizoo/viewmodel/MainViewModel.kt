@@ -1,65 +1,51 @@
 package com.caroline.taipeizoo.viewmodel
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.caroline.taipeizoo.model.Area
+import androidx.lifecycle.*
+import com.caroline.taipeizoo.database.getDatabase
 import com.caroline.taipeizoo.model.Plant
-import com.caroline.taipeizoo.network.ZooApi
+import com.caroline.taipeizoo.repository.AreasRepository
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 /**
  * Created by nini on 2021/1/18.
  */
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
+    private val areasRepository = AreasRepository(getDatabase(application))
+    val areaList = areasRepository.areas
     private val _loading = MutableLiveData<LoadingState>()
-    private val _data = MutableLiveData<List<Area>>()
-    private val _selectedArea = MutableLiveData<Area>()
     private val _selectedPlant = MutableLiveData<Plant>()
 
     val loadingState: LiveData<LoadingState>
         get() = _loading
-
-    val data: LiveData<List<Area>>
-        get() = _data
-    val selectedArea: LiveData<Area>
-        get() = _selectedArea
     val selectedPlant: LiveData<Plant>
         get() = _selectedPlant
 
-    fun reloadArea() {
+
+    fun refreshAreas() {
         if (_loading.value == LoadingState.LOADING) {
             return
         }
-        _data.value = ArrayList()
-        loadIntroduction()
-    }
-
-    fun loadIntroduction() {
-        if (_data.value != null && _data.value!!.isNotEmpty()) {
-            return
-        }
+        _loading.value = LoadingState.LOADING
         viewModelScope.launch {
-            _loading.value = LoadingState.LOADING
             try {
-                _data.value = ZooApi.retrofitService.getAreas().result.results
+                areasRepository.refreshAreas()
                 _loading.value = LoadingState.PENDING
-            } catch (e: Exception) {
-                _data.value = ArrayList()
+            } catch (networkError: IOException) {
                 _loading.value = LoadingState.ERROR
-                Log.e(Companion.TAG, e.toString())
+                Log.e(Companion.TAG, networkError.toString())
             }
         }
-
     }
 
-    fun selectArea(area: Area?) {
-
-        _selectedArea.value = area
+    fun loadAreas() {
+        if (areaList.value == null || areaList.value!!.isEmpty()) {
+            refreshAreas()
+        }
     }
 
     fun selectedPlant(plant: Plant) {
@@ -67,6 +53,18 @@ class MainViewModel : ViewModel() {
         _selectedPlant.value = plant
     }
 
+    /**
+     * Factory for constructing DevByteViewModel with parameter
+     */
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
 
     companion object {
         private const val TAG = "MainViewModel"

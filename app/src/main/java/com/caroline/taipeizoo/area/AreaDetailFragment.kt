@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Area
+import com.caroline.taipeizoo.model.NetworkArea
 import com.caroline.taipeizoo.viewmodel.AreaViewModel
 import com.caroline.taipeizoo.viewmodel.LoadingState
 import com.caroline.taipeizoo.viewmodel.MainViewModel
@@ -27,7 +27,7 @@ class AreaDetailFragment : Fragment() {
     }
 
 
-    private lateinit var area: Area
+    private lateinit var area: NetworkArea
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +35,7 @@ class AreaDetailFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_area, container, false)
-        area = mainViewModel.selectedArea.value!!
+        area = requireArguments().get("Area") as NetworkArea
         (activity as AppCompatActivity).supportActionBar?.title = area.E_Name
         val plantAdapter = AreaDetailAdapter(AreaDetailAdapter.OnClickListener { v, plant ->
             mainViewModel.selectedPlant(plant)
@@ -67,7 +67,7 @@ class AreaDetailFragment : Fragment() {
 
 }
 
-fun Area.getHoliday(context: Context): String {
+fun NetworkArea.getHoliday(context: Context): String {
     if (E_Memo.isEmpty()) {
         return context.getString(R.string.no_holiday_info)
     }
