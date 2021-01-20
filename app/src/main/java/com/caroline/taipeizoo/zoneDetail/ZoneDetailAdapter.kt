@@ -26,9 +26,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.model.Zone
 import com.caroline.taipeizoo.model.Plant
+import com.caroline.taipeizoo.model.Zone
 import kotlinx.android.synthetic.main.item_header.view.*
 import kotlinx.android.synthetic.main.item_view_holder.view.*
 import kotlinx.android.synthetic.main.item_view_holder.view.holidayText
@@ -144,6 +145,7 @@ class AreaDetailAdapter(private val onClickListener: OnClickListener) :
                 .centerCrop()
                 .error(R.drawable.image_not_found)
                 .placeholder(R.drawable.image_loading)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(icon)
         }
 

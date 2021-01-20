@@ -22,17 +22,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.caroline.taipeizoo.R
-import com.caroline.taipeizoo.zoneDetail.getHoliday
 import com.caroline.taipeizoo.model.Zone
+import com.caroline.taipeizoo.zoneDetail.getHoliday
 import kotlinx.android.synthetic.main.item_view_holder.view.*
+
 
 class ZoneListAdapter(private val onClickListener: OnClickListener) :
     RecyclerView.Adapter<ZoneListAdapter.InfoViewHolder>() {
 
     private val data = ArrayList<Zone>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ZoneListAdapter.InfoViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ZoneListAdapter.InfoViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_view_holder, parent, false)
         return InfoViewHolder(itemView)
@@ -50,10 +54,6 @@ class ZoneListAdapter(private val onClickListener: OnClickListener) :
         notifyDataSetChanged()
     }
 
-    val options = RequestOptions()
-        .skipMemoryCache(true)
-        .error(R.drawable.image_not_found)
-        .placeholder(R.drawable.image_loading)
 
     inner class InfoViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -70,7 +70,9 @@ class ZoneListAdapter(private val onClickListener: OnClickListener) :
             Glide.with(itemView.context)
                 .load(item.E_Pic_URL)
                 .centerCrop()
-                .apply(options.override(200, 200))
+                .error(R.drawable.image_not_found)
+                .placeholder(R.drawable.image_loading)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(icon)
         }
 
